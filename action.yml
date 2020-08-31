@@ -7,6 +7,10 @@ branding:
   icon: edit-2
   color: orange
 inputs:
+  action:
+    description: "The primary action for release-drafter should perform (currently we only have a draft action)"
+    required: false
+    default: "draft"
   config-name:
     description: |
       If your workflow requires multiple release-drafter configs it be helpful to override the config-name.

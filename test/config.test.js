@@ -8,8 +8,10 @@ function createGetConfigMock(config) {
 }
 
 describe('getConfig', () => {
+  let github
+
   it('returns defaults', async () => {
-    const app = { log: { info: jest.fn(), warn: jest.fn() } }
+    const log = { info: jest.fn(), warning: jest.fn() }
     const context = {
       payload: { repository: { default_branch: 'master' } },
       config: createGetConfigMock({
@@ -18,7 +20,7 @@ describe('getConfig', () => {
     }
 
     const config = await getConfig({
-      app,
+      log,
       context,
     })
 
@@ -31,7 +33,7 @@ describe('getConfig', () => {
 
   describe('`replacers` option', () => {
     it('validates `replacers` option', async () => {
-      const app = { log: { info: jest.fn(), warn: jest.fn() } }
+      const log = { info: jest.fn(), warning: jest.fn() }
       const context = {
         payload: { repository: { default_branch: 'master' } },
         config: createGetConfigMock({ replacers: 'bogus' }),
@@ -39,7 +41,7 @@ describe('getConfig', () => {
 
       expect(
         getConfig({
-          app,
+          log,
           context,
         })
       ).rejects.toThrow(
@@ -48,7 +50,7 @@ describe('getConfig', () => {
     })
 
     it('accepts valid `replacers`', async () => {
-      const app = { log: { info: jest.fn(), warn: jest.fn() } }
+      const log = { info: jest.fn(), warning: jest.fn() }
       const context = {
         payload: { repository: { default_branch: 'master' } },
         config: createGetConfigMock({
@@ -58,7 +60,7 @@ describe('getConfig', () => {
       }
 
       const config = await getConfig({
-        app,
+        log,
         context,
       })
 
@@ -70,7 +72,7 @@ describe('getConfig', () => {
 
   describe('`sort-direction` option', () => {
     it('validates `sort-direction` option', async () => {
-      const app = { log: { info: jest.fn(), warn: jest.fn() } }
+      const log = { info: jest.fn(), warning: jest.fn() }
       const context = {
         payload: { repository: { default_branch: 'master' } },
         config: createGetConfigMock({ 'sort-direction': 'bogus' }),
@@ -78,7 +80,7 @@ describe('getConfig', () => {
 
       expect(
         getConfig({
-          app,
+          log,
           context,
         })
       ).rejects.toThrow(
@@ -87,7 +89,7 @@ describe('getConfig', () => {
     })
 
     it('accepts a valid `sort-direction`', async () => {
-      const app = { log: { info: jest.fn(), warn: jest.fn() } }
+      const log = { info: jest.fn(), warning: jest.fn() }
       const context = {
         payload: { repository: { default_branch: 'master' } },
         config: createGetConfigMock({
@@ -97,7 +99,7 @@ describe('getConfig', () => {
       }
 
       const config = await getConfig({
-        app,
+        log,
         context,
       })
 
