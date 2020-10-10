@@ -1,5 +1,6 @@
 const { DEFAULT_CONFIG } = require('../lib/default-config')
 const { getConfig } = require('../lib/config')
+const { GitHub } = require('@actions/github')
 const { SORT_DIRECTIONS } = require('../lib/sort-pull-requests')
 
 function createGetConfigMock(config) {
@@ -9,6 +10,10 @@ function createGetConfigMock(config) {
 
 describe('getConfig', () => {
   let github
+
+  beforeEach(() => {
+    github = GitHub()
+  })
 
   it('returns defaults', async () => {
     const log = { info: jest.fn(), warning: jest.fn() }
